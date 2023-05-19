@@ -1,0 +1,42 @@
+1. download source
+
+
+mkdir -p ~/uuv_ws/src
+cd ~/uuv_ws/src
+git clone https://github.com/Field-Robotics-Lab/dave.git
+
+sudo apt install python3-vcstool
+
+cd ~/uuv_ws/src
+vcs import --skip-existing --input dave/extras/repos/dave_sim.repos .
+cd ~/uuv_ws/src
+vcs import --skip-existing --input dave/extras/repos/multibeam_sim.repos .
+
+####
+如果报google::protobuf::RepeatedPtrField  [j] 算符的错，换用Get(j)
+要获取google::protobuf::RepeatedPtrField中第i个元素，您可以使用RepeatedPtrField类的Get()方法。
+以下是一个示例代码：
+
+c++
+
+// 假设repeated_field是一个google::protobuf::RepeatedPtrField对象
+if (i >= 0 && i < repeated_field.size()) {
+  const auto& element = repeated_field.Get(i);
+  // 使用element对象执行您想要的操作
+} else {
+  // 处理越界错误
+}
+
+在这个示例中，Get()方法将返回一个指向第i个元素的常量指针。由于Get()方法不会检查索引是否有效，因此您应该在使用它之前先检查索引是否在有效范围内。
+
+请注意，由于Get()方法返回一个常量指针，因此您只能使用常量方法来访问该元素。如果您需要修改元素的值，您可以将其复制到一个可修改的变量中，然后在该变量上进行修改。
+###
+
+2. 查看cuda版本 nvcc --version, 用cuda官网的方法搞到11以上。我用的11.4,并且在bashrc中添加如下代码来让计算机使用最新的cuda：
+export PATH=/usr/local/cuda-11.4/bin${PATH:+:${PATH}}$
+export LD_LIBRARY_PATH=/usr/local/cuda-11.4/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+
+
+3.如果报 nvcc -flpc 的问题，就更新 cmake
+
